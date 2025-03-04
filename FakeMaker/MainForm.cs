@@ -1,10 +1,24 @@
-namespace FakeMaker
+namespace FakeMaker;
+
+public partial class MainForm : Form
 {
-    public partial class MainForm : Form
+    public MainForm()
     {
-        public MainForm()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
+    }
+
+    private void ConfigureButton_Click(object sender, EventArgs e)
+    {
+
+    }
+
+    private void GenerateButton_Click(object sender, EventArgs e)
+    {
+
+    }
+
+    private void ExportButton_Click(object sender, EventArgs e)
+    {
+
     }
 }
