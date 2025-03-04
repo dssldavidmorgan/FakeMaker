@@ -39,10 +39,12 @@
             addButton = new Button();
             removeButton = new Button();
             columnsListBox = new ListBox();
+            columnsBindingSource = new BindingSource(components);
             okButton = new Button();
             columnsGroupBox.SuspendLayout();
             columnGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)typeBindingSource).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)columnsBindingSource).BeginInit();
             SuspendLayout();
             // 
             // columnsGroupBox
@@ -118,6 +120,7 @@
             addButton.TabIndex = 2;
             addButton.Text = "Add";
             addButton.UseVisualStyleBackColor = true;
+            addButton.Click += AddButton_Click;
             // 
             // removeButton
             // 
@@ -132,6 +135,7 @@
             // columnsListBox
             // 
             columnsListBox.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
+            columnsListBox.DataSource = columnsBindingSource;
             columnsListBox.FormattingEnabled = true;
             columnsListBox.ItemHeight = 15;
             columnsListBox.Location = new Point(6, 22);
@@ -164,6 +168,7 @@
             columnGroupBox.ResumeLayout(false);
             columnGroupBox.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)typeBindingSource).EndInit();
+            ((System.ComponentModel.ISupportInitialize)columnsBindingSource).EndInit();
             ResumeLayout(false);
         }
 
@@ -180,5 +185,6 @@
         private Label nameLabel;
         private Button okButton;
         private BindingSource typeBindingSource;
+        private BindingSource columnsBindingSource;
     }
 }

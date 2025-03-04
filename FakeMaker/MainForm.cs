@@ -1,3 +1,5 @@
+using FakeMaker.Core;
+
 namespace FakeMaker;
 
 public partial class MainForm : Form
@@ -9,7 +11,16 @@ public partial class MainForm : Form
 
     private void ConfigureButton_Click(object sender, EventArgs e)
     {
-        using var configureDialog = new ConfigureDialog();
+        var configuration = new Configuration
+        {
+            Columns =
+            [
+                new Column { Name = "col1", Type = DataType.FirstName },
+                new Column { Name = "col2", Type = DataType.LastName },
+            ]
+        };
+
+        using var configureDialog = new ConfigureDialog(configuration);
         configureDialog.ShowDialog();
     }
 
