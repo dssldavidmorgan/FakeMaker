@@ -40,7 +40,6 @@
             removeButton = new Button();
             columnsListBox = new ListBox();
             columnsBindingSource = new BindingSource(components);
-            okButton = new Button();
             columnsGroupBox.SuspendLayout();
             columnGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)typeBindingSource).BeginInit();
@@ -131,6 +130,7 @@
             removeButton.TabIndex = 1;
             removeButton.Text = "Remove";
             removeButton.UseVisualStyleBackColor = true;
+            removeButton.Click += RemoveButton_Click;
             // 
             // columnsListBox
             // 
@@ -143,22 +143,11 @@
             columnsListBox.Size = new Size(188, 349);
             columnsListBox.TabIndex = 0;
             // 
-            // okButton
-            // 
-            okButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            okButton.Location = new Point(465, 429);
-            okButton.Name = "okButton";
-            okButton.Size = new Size(90, 33);
-            okButton.TabIndex = 1;
-            okButton.Text = "OK";
-            okButton.UseVisualStyleBackColor = true;
-            // 
             // ConfigureDialog
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(567, 466);
-            Controls.Add(okButton);
+            ClientSize = new Size(567, 433);
             Controls.Add(columnsGroupBox);
             FormBorderStyle = FormBorderStyle.FixedDialog;
             Name = "ConfigureDialog";
@@ -183,7 +172,6 @@
         private ComboBox typeComboBox;
         private TextBox nameTextBox;
         private Label nameLabel;
-        private Button okButton;
         private BindingSource typeBindingSource;
         private BindingSource columnsBindingSource;
     }

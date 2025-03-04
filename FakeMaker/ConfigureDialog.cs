@@ -47,4 +47,10 @@ public partial class ConfigureDialog : Form
     {
         columnsBindingSource.Add(new Column { Name = "new_column", Type = DataType.FirstName });
     }
+
+    private void RemoveButton_Click(object sender, EventArgs e)
+    {
+        if (columnsListBox.SelectedIndex >= 0)
+            columnsBindingSource.RemoveAt(columnsListBox.SelectedIndex);
+    }
 }
