@@ -2,5 +2,5 @@
 
 public class Configuration
 {
-    public List<Column> Columns { get; } = [];
+    public List<Column> Columns { get; init; } = [];
 }

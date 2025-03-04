@@ -2,5 +2,5 @@
 
 public interface IExporter
 {
-    void Export(Stream stream, IEnumerable<Record> records);
+    void Export(Stream stream, IEnumerable<Record> records, Configuration configuration);
 }
