@@ -9,7 +9,8 @@ public partial class MainForm : Form
 
     private void ConfigureButton_Click(object sender, EventArgs e)
     {
-
+        using var configureDialog = new ConfigureDialog();
+        configureDialog.ShowDialog();
     }
 
     private void GenerateButton_Click(object sender, EventArgs e)
