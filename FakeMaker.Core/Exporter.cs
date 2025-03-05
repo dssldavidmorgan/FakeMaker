@@ -14,6 +14,19 @@ public class Exporter : IExporter
                 writer.Write(',');
         }
 
+        foreach (var record in records)
+        {
+            writer.WriteLine();
+
+            for (var j = 0; j < record.Fields.Length; ++j)
+            {
+                writer.Write(record.Fields[j]);
+
+                if (j < configuration.Columns.Count - 1)
+                    writer.Write(',');
+            }
+        }
+
         writer.Flush();
     }
 }

@@ -27,7 +27,7 @@ public class ExportTests
         var exporter = new Exporter();
 
         // Act
-        exporter.Export(stream, records: null!, configuration);
+        exporter.Export(stream, records: [], configuration);
 
         // Assert
         stream.Seek(0, SeekOrigin.Begin);
@@ -35,5 +35,46 @@ public class ExportTests
         var result = reader.ReadToEnd();
 
         Assert.Equal("first_name,last_name", result);
+    }
+
+    [Fact]
+    public void TwoRecordsAreExported_ResultantStringIsCorrect()
+    {
+        // Arrange
+        using var stream = new MemoryStream();
+        var configuration = new Configuration()
+        {
+            Columns =
+            [
+                new Column
+                {
+                    Name = "first_name",
+                    Type = DataType.FirstName,
+                },
+                new Column
+                {
+                    Name = "last_name",
+                    Type = DataType.LastName,
+                },
+            ]
+        };
+
+        var records = new List<Record>()
+        {
+            new(["David", "Morgan"]),
+            new(["Bethan", "Smith"]),
+        };
+
+        var exporter = new Exporter();
+
+        // Act
+        exporter.Export(stream, records, configuration);
+
+        // Assert
+        stream.Seek(0, SeekOrigin.Begin);
+        using var reader = new StreamReader(stream);
+        var result = reader.ReadToEnd();
+
+        Assert.Equal($"first_name,last_name{Environment.NewLine}David,Morgan{Environment.NewLine}Bethan,Smith", result);
     }
 }
