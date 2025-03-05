@@ -53,4 +53,20 @@ public partial class ConfigureDialog : Form
         if (columnsListBox.SelectedIndex >= 0)
             columnsBindingSource.RemoveAt(columnsListBox.SelectedIndex);
     }
+
+    private void LoadButton_Click(object sender, EventArgs e)
+    {
+        if (openFileDialog.ShowDialog() == DialogResult.OK)
+        {
+
+        }
+    }
+
+    private void SaveButton_Click(object sender, EventArgs e)
+    {
+        if (saveFileDialog.ShowDialog() == DialogResult.OK)
+        {
+
+        }
+    }
 }

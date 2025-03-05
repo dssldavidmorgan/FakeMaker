@@ -40,6 +40,10 @@
             removeButton = new Button();
             columnsListBox = new ListBox();
             columnsBindingSource = new BindingSource(components);
+            saveButton = new Button();
+            loadButton = new Button();
+            openFileDialog = new OpenFileDialog();
+            saveFileDialog = new SaveFileDialog();
             columnsGroupBox.SuspendLayout();
             columnGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)typeBindingSource).BeginInit();
@@ -55,7 +59,7 @@
             columnsGroupBox.Controls.Add(columnsListBox);
             columnsGroupBox.Location = new Point(12, 12);
             columnsGroupBox.Name = "columnsGroupBox";
-            columnsGroupBox.Size = new Size(543, 411);
+            columnsGroupBox.Size = new Size(543, 382);
             columnsGroupBox.TabIndex = 0;
             columnsGroupBox.TabStop = false;
             columnsGroupBox.Text = "Columns";
@@ -113,7 +117,7 @@
             // addButton
             // 
             addButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
-            addButton.Location = new Point(103, 378);
+            addButton.Location = new Point(103, 349);
             addButton.Name = "addButton";
             addButton.Size = new Size(91, 23);
             addButton.TabIndex = 2;
@@ -124,7 +128,7 @@
             // removeButton
             // 
             removeButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
-            removeButton.Location = new Point(6, 378);
+            removeButton.Location = new Point(6, 349);
             removeButton.Name = "removeButton";
             removeButton.Size = new Size(91, 23);
             removeButton.TabIndex = 1;
@@ -140,14 +144,46 @@
             columnsListBox.ItemHeight = 15;
             columnsListBox.Location = new Point(6, 22);
             columnsListBox.Name = "columnsListBox";
-            columnsListBox.Size = new Size(188, 349);
+            columnsListBox.Size = new Size(188, 319);
             columnsListBox.TabIndex = 0;
+            // 
+            // saveButton
+            // 
+            saveButton.Location = new Point(480, 400);
+            saveButton.Name = "saveButton";
+            saveButton.Size = new Size(75, 23);
+            saveButton.TabIndex = 1;
+            saveButton.Text = "Save";
+            saveButton.UseVisualStyleBackColor = true;
+            saveButton.Click += SaveButton_Click;
+            // 
+            // loadButton
+            // 
+            loadButton.Location = new Point(399, 400);
+            loadButton.Name = "loadButton";
+            loadButton.Size = new Size(75, 23);
+            loadButton.TabIndex = 2;
+            loadButton.Text = "Load";
+            loadButton.UseVisualStyleBackColor = true;
+            loadButton.Click += LoadButton_Click;
+            // 
+            // openFileDialog
+            // 
+            openFileDialog.DefaultExt = "xml";
+            openFileDialog.Filter = "XML files|*.xml|All files|*.*";
+            // 
+            // saveFileDialog
+            // 
+            saveFileDialog.DefaultExt = "xml";
+            saveFileDialog.Filter = "XML Files|*.xml|All files|*.*";
             // 
             // ConfigureDialog
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(567, 433);
+            Controls.Add(loadButton);
+            Controls.Add(saveButton);
             Controls.Add(columnsGroupBox);
             FormBorderStyle = FormBorderStyle.FixedDialog;
             Name = "ConfigureDialog";
@@ -175,5 +211,9 @@
         private Label nameLabel;
         private BindingSource typeBindingSource;
         private BindingSource columnsBindingSource;
+        private Button saveButton;
+        private Button loadButton;
+        private OpenFileDialog openFileDialog;
+        private SaveFileDialog saveFileDialog;
     }
 }
