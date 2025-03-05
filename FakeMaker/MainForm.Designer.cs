@@ -33,7 +33,9 @@
             configureButton = new ToolStripButton();
             generateButton = new ToolStripButton();
             exportButton = new ToolStripButton();
+            dataGridView = new DataGridView();
             toolStrip.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dataGridView).BeginInit();
             SuspendLayout();
             // 
             // toolStrip
@@ -76,16 +78,27 @@
             exportButton.Text = "Export";
             exportButton.Click += ExportButton_Click;
             // 
+            // dataGridView
+            // 
+            dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridView.Dock = DockStyle.Fill;
+            dataGridView.Location = new Point(0, 25);
+            dataGridView.Name = "dataGridView";
+            dataGridView.Size = new Size(800, 425);
+            dataGridView.TabIndex = 1;
+            // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(dataGridView);
             Controls.Add(toolStrip);
             Name = "MainForm";
             Text = "FakeMaker";
             toolStrip.ResumeLayout(false);
             toolStrip.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)dataGridView).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -96,5 +109,6 @@
         private ToolStripButton configureButton;
         private ToolStripButton generateButton;
         private ToolStripButton exportButton;
+        private DataGridView dataGridView;
     }
 }
