@@ -34,6 +34,7 @@
             generateButton = new ToolStripButton();
             exportButton = new ToolStripButton();
             dataGridView = new DataGridView();
+            exportFileDialog = new SaveFileDialog();
             toolStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView).BeginInit();
             SuspendLayout();
@@ -87,6 +88,11 @@
             dataGridView.Size = new Size(800, 425);
             dataGridView.TabIndex = 1;
             // 
+            // exportFileDialog
+            // 
+            exportFileDialog.DefaultExt = "csv";
+            exportFileDialog.Filter = "CSV files|*.csv|All files|*.*";
+            // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -110,5 +116,6 @@
         private ToolStripButton generateButton;
         private ToolStripButton exportButton;
         private DataGridView dataGridView;
+        private SaveFileDialog exportFileDialog;
     }
 }

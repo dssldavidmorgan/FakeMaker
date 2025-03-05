@@ -7,6 +7,9 @@ public partial class MainForm : Form
 {
     private readonly Configuration configuration = new();
     private readonly Generator generator = new();
+    private readonly Exporter exporter = new();
+
+    private IEnumerable<Record>? records = null;
 
     public MainForm()
     {
@@ -25,7 +28,7 @@ public partial class MainForm : Form
 
         if (generateDialog.ShowDialog() == DialogResult.OK)
         {
-            var records = generator.Generate(generateDialog.Count, configuration);
+            records = generator.Generate(generateDialog.Count, configuration);
 
             LoadDataGridView(records);
         }
@@ -46,6 +49,23 @@ public partial class MainForm : Form
 
     private void ExportButton_Click(object sender, EventArgs e)
     {
+        if (records is null)
+        {
+            MessageBox.Show(
+                owner: this,
+                text: "Records have not yet been generated",
+                caption: "Error",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Error);
 
+            return;
+        }
+
+        if (exportFileDialog.ShowDialog() == DialogResult.OK)
+        {
+            using var file = new FileStream(exportFileDialog.FileName, FileMode.OpenOrCreate);
+
+            exporter.Export(file, records, configuration);
+        }
     }
 }
