@@ -4,16 +4,23 @@ namespace FakeMaker;
 
 public partial class ConfigureDialog : Form
 {
+    public Configuration Configuration { get; private set; }
+
     public ConfigureDialog(Configuration configuration)
     {
+        Configuration = configuration;
+
         InitializeComponent();
-        InitializeDataBindings(configuration);
+        InitializeDataBindings();
     }
 
-    private void InitializeDataBindings(Configuration configuration)
+    private void InitializeDataBindings()
     {
-        columnsBindingSource.DataSource = configuration.Columns;
+        columnsBindingSource.DataSource = Configuration.Columns;
         columnsListBox.DisplayMember = nameof(Column.Name);
+
+        nameTextBox.DataBindings.Clear();
+        typeComboBox.DataBindings.Clear();
 
         nameTextBox.DataBindings.Add(
             nameof(TextBox.Text),
@@ -58,7 +65,9 @@ public partial class ConfigureDialog : Form
     {
         if (openFileDialog.ShowDialog() == DialogResult.OK)
         {
-
+            using var fileStream = new FileStream(openFileDialog.FileName, FileMode.Open, FileAccess.Read);
+            Configuration = ConfigurationSerializer.Load(fileStream);
+            InitializeDataBindings();
         }
     }
 
@@ -66,7 +75,8 @@ public partial class ConfigureDialog : Form
     {
         if (saveFileDialog.ShowDialog() == DialogResult.OK)
         {
-
+            using var fileStream = new FileStream(saveFileDialog.FileName, FileMode.Create, FileAccess.Write);
+            ConfigurationSerializer.Save(Configuration, fileStream);
         }
     }
 }

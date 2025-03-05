@@ -5,7 +5,7 @@ namespace FakeMaker;
 
 public partial class MainForm : Form
 {
-    private readonly Configuration configuration = new();
+    private Configuration configuration = new();
 
     public MainForm()
     {
@@ -16,6 +16,7 @@ public partial class MainForm : Form
     {
         using var configureDialog = new ConfigureDialog(configuration);
         configureDialog.ShowDialog();
+        configuration = configureDialog.Configuration;
     }
 
     private void GenerateButton_Click(object sender, EventArgs e)
