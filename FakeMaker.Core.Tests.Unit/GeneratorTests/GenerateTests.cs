@@ -1,4 +1,6 @@
-﻿namespace FakeMaker.Core.Tests.Unit.GeneratorTests;
+﻿using System.Data;
+
+namespace FakeMaker.Core.Tests.Unit.GeneratorTests;
 
 public class GenerateTests
 {
@@ -11,13 +13,12 @@ public class GenerateTests
     {
         // Arrange
         var configuration = new Configuration();
-        var generator = new Generator();
 
         // Act
-        var result = generator.Generate(count, configuration);
+        var result = Generator.Generate(count, configuration);
 
         // Assert
-        Assert.Equal(count, result.Count());
+        Assert.Equal(count, result.Rows.Count);
     }
 
     [Theory]
@@ -40,13 +41,11 @@ public class GenerateTests
             configuration.Columns.Add(column);
         }
 
-        var generator = new Generator();
-
         // Act
-        var result = generator.Generate(100, configuration);
+        var result = Generator.Generate(100, configuration);
 
         // Assert
-        Assert.All(result, x => Assert.Equal(columnCount, x.Fields.Length));
+        Assert.All(GetRows(result), x => Assert.Equal(columnCount, x.ItemArray.Length));
     }
 
     [Fact]
@@ -61,17 +60,17 @@ public class GenerateTests
             ],
         };
 
-        var generator = new Generator();
-
         // Act
-        var result = generator.Generate(10, configuration);
+        var result = Generator.Generate(10, configuration);
 
         // Assert
-        Assert.All(result, x =>
+        Assert.All(GetRows(result), x =>
         {
-            Assert.NotEmpty(x.Fields[0]);
-            Assert.True(char.IsUpper(x.Fields[0][0]));
-            Assert.All(x.Fields[0][1..], y => char.IsUpper(y));
+            var fields = GetFields(x);
+
+            Assert.NotEmpty(fields);
+            Assert.True(char.IsUpper(fields[0][0]));
+            Assert.All(fields[0][1..], y => char.IsUpper(y));
         });
     }
 
@@ -87,17 +86,17 @@ public class GenerateTests
             ],
         };
 
-        var generator = new Generator();
-
         // Act
-        var result = generator.Generate(10, configuration);
+        var result = Generator.Generate(10, configuration);
 
         // Assert
-        Assert.All(result, x =>
+        Assert.All(GetRows(result), x =>
         {
-            Assert.NotEmpty(x.Fields[0]);
-            Assert.True(char.IsUpper(x.Fields[0][0]));
-            Assert.All(x.Fields[0][1..], y => char.IsUpper(y));
+            var fields = GetFields(x);
+
+            Assert.NotEmpty(fields[0]);
+            Assert.True(char.IsUpper(fields[0][0]));
+            Assert.All(fields[0][1..], y => char.IsUpper(y));
         });
     }
 
@@ -113,16 +112,16 @@ public class GenerateTests
             ],
         };
 
-        var generator = new Generator();
-
         // Act
-        var result = generator.Generate(10, configuration);
+        var result = Generator.Generate(10, configuration);
 
         // Assert
-        Assert.All(result, x =>
+        Assert.All(GetRows(result), x =>
         {
-            Assert.Equal(8, x.Fields[0].Length);
-            Assert.All(x.Fields[0], y => char.IsDigit(y));
+            var fields = GetFields(x);
+
+            Assert.Equal(8, fields[0].Length);
+            Assert.All(fields[0], y => char.IsDigit(y));
         });
     }
 
@@ -138,16 +137,16 @@ public class GenerateTests
             ],
         };
 
-        var generator = new Generator();
-
         // Act
-        var result = generator.Generate(10, configuration);
+        var result = Generator.Generate(10, configuration);
 
         // Assert
-        Assert.All(result, x =>
+        Assert.All(GetRows(result), x =>
         {
-            Assert.NotEmpty(x.Fields[0]);
-            Assert.Contains('@', x.Fields[0]);
+            var fields = GetFields(x);
+
+            Assert.NotEmpty(fields[0]);
+            Assert.Contains('@', fields[0]);
         });
     }
 
@@ -163,15 +162,15 @@ public class GenerateTests
             ],
         };
 
-        var generator = new Generator();
-
         // Act
-        var result = generator.Generate(10, configuration);
+        var result = Generator.Generate(10, configuration);
 
         // Assert
-        Assert.All(result, x =>
+        Assert.All(GetRows(result), x =>
         {
-            Assert.True(DateOnly.TryParse(x.Fields[0], out var dateRecent));
+            var fields = GetFields(x);
+
+            Assert.True(DateOnly.TryParse(fields[0], out var dateRecent));
             Assert.True(dateRecent <= DateOnly.FromDateTime(DateTime.Today));
         });
     }
@@ -188,16 +187,20 @@ public class GenerateTests
             ],
         };
 
-        var generator = new Generator();
-
         // Act
-        var result = generator.Generate(10, configuration);
+        var result = Generator.Generate(10, configuration);
 
         // Assert
-        Assert.All(result, x =>
+        Assert.All(GetRows(result), x =>
         {
-            Assert.True(DateOnly.TryParse(x.Fields[0], out var dateRecent));
+            var fields = GetFields(x);
+
+            Assert.True(DateOnly.TryParse(fields[0], out var dateRecent));
             Assert.True(dateRecent >= DateOnly.FromDateTime(DateTime.Today));
         });
     }
+
+    private static DataRow[] GetRows(DataTable dataTable) => [.. dataTable.Rows.Cast<DataRow>()];
+
+    private static string[] GetFields(DataRow dataRow) => [.. dataRow.ItemArray.Cast<string>()];
 }

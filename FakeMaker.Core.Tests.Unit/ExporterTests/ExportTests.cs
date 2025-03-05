@@ -1,4 +1,6 @@
-﻿namespace FakeMaker.Core.Tests.Unit.ExporterTests;
+﻿using System.Data;
+
+namespace FakeMaker.Core.Tests.Unit.ExporterTests;
 
 public class ExportTests
 {
@@ -7,27 +9,15 @@ public class ExportTests
     {
         // Arrange
         using var stream = new MemoryStream();
-        var configuration = new Configuration()
-        {
-            Columns =
-            [
-                new Column
-                {
-                    Name = "first_name",
-                    Type = DataType.FirstName,
-                },
-                new Column
-                {
-                    Name = "last_name",
-                    Type = DataType.LastName,
-                },
-            ]
-        };
+        var dataTable = new DataTable();
 
-        var exporter = new Exporter();
+        dataTable.Columns.AddRange([
+            new DataColumn("first_name"),
+            new DataColumn("last_name"),
+        ]);
 
         // Act
-        exporter.Export(stream, records: [], configuration);
+        Exporter.Export(stream, dataTable);
 
         // Assert
         stream.Seek(0, SeekOrigin.Begin);
@@ -42,33 +32,19 @@ public class ExportTests
     {
         // Arrange
         using var stream = new MemoryStream();
-        var configuration = new Configuration()
-        {
-            Columns =
-            [
-                new Column
-                {
-                    Name = "first_name",
-                    Type = DataType.FirstName,
-                },
-                new Column
-                {
-                    Name = "last_name",
-                    Type = DataType.LastName,
-                },
-            ]
-        };
 
-        var records = new List<Record>()
-        {
-            new(["David", "Morgan"]),
-            new(["Bethan", "Smith"]),
-        };
+        var dataTable = new DataTable();
 
-        var exporter = new Exporter();
+        dataTable.Columns.AddRange([
+            new DataColumn("first_name"),
+            new DataColumn("last_name"),
+        ]);
+
+        dataTable.Rows.Add("David", "Morgan");
+        dataTable.Rows.Add("Bethan", "Smith");
 
         // Act
-        exporter.Export(stream, records, configuration);
+        Exporter.Export(stream, dataTable);
 
         // Assert
         stream.Seek(0, SeekOrigin.Begin);

@@ -6,10 +6,6 @@ namespace FakeMaker;
 public partial class MainForm : Form
 {
     private readonly Configuration configuration = new();
-    private readonly Generator generator = new();
-    private readonly Exporter exporter = new();
-
-    private IEnumerable<Record>? records = null;
 
     public MainForm()
     {
@@ -28,28 +24,14 @@ public partial class MainForm : Form
 
         if (generateDialog.ShowDialog() == DialogResult.OK)
         {
-            records = generator.Generate(generateDialog.Count, configuration);
-
-            LoadDataGridView(records);
+            var dataTable = Generator.Generate(generateDialog.Count, configuration);
+            dataGridView.DataSource = dataTable;
         }
-    }
-
-    private void LoadDataGridView(IEnumerable<Record> records)
-    {
-        var dataTable = new DataTable();
-
-        foreach (var column in configuration.Columns)
-            dataTable.Columns.Add(column.Name);
-
-        foreach (var record in records)
-            dataTable.Rows.Add(record.Fields);
-
-        dataGridView.DataSource = dataTable;
     }
 
     private void ExportButton_Click(object sender, EventArgs e)
     {
-        if (records is null)
+        if (dataGridView.DataSource is null)
         {
             MessageBox.Show(
                 owner: this,
@@ -65,7 +47,7 @@ public partial class MainForm : Form
         {
             using var file = new FileStream(exportFileDialog.FileName, FileMode.OpenOrCreate);
 
-            exporter.Export(file, records, configuration);
+            Exporter.Export(file, (DataTable)dataGridView.DataSource);
         }
     }
 }

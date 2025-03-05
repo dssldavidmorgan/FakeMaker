@@ -1,30 +1,26 @@
-﻿namespace FakeMaker.Core;
+﻿using System.Data;
 
-public class Exporter : IExporter
+namespace FakeMaker.Core;
+
+public static class Exporter
 {
-    public void Export(Stream stream, IEnumerable<Record> records, Configuration configuration)
+    public static void Export(Stream stream, DataTable dataTable)
     {
         using var writer = new StreamWriter(stream, leaveOpen: true);
 
-        for (var i = 0; i < configuration.Columns.Count; ++i)
-        {
-            writer.Write(configuration.Columns[i].Name);
+        var columnNames = dataTable.Columns.Cast<DataColumn>().Select(c => c.ColumnName);
+        var header = string.Join(',', columnNames);
 
-            if (i < configuration.Columns.Count - 1)
-                writer.Write(',');
-        }
+        writer.Write(header);
 
-        foreach (var record in records)
+        foreach (var dataRow in dataTable.Rows.Cast<DataRow>())
         {
             writer.WriteLine();
 
-            for (var j = 0; j < record.Fields.Length; ++j)
-            {
-                writer.Write(record.Fields[j]);
+            var row = string.Join(',', dataRow.ItemArray.Select(
+                i => i is null ? string.Empty : i.ToString()));
 
-                if (j < configuration.Columns.Count - 1)
-                    writer.Write(',');
-            }
+            writer.Write(row);
         }
 
         writer.Flush();

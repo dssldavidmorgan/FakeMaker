@@ -1,25 +1,38 @@
 ﻿using Bogus;
+using System.Data;
 
 namespace FakeMaker.Core;
 
-public class Generator : IGenerator
+public static class Generator
 {
-    private readonly Faker faker = new();
-
-    public IEnumerable<Record> Generate(int count, Configuration configuration)
+    public static DataTable Generate(int count, Configuration configuration)
     {
+        var faker = new Faker();
+        var dataTable = new DataTable();
+
+        var columns = configuration.Columns.Select(c => new DataColumn(c.Name));
+        dataTable.Columns.AddRange([.. columns]);
+
         for (var i = 0; i < count; ++i)
-            yield return GenerateRecord(configuration);
+        {
+            var dataRow = GenerateRecord(configuration, dataTable, faker);
+            dataTable.Rows.Add(dataRow);
+        }
+
+        return dataTable;
     }
 
-    private Record GenerateRecord(Configuration configuration)
+    private static DataRow GenerateRecord(Configuration configuration, DataTable dataTable, Faker faker)
     {
-        var fields = configuration.Columns.Select(GenerateField);
+        var fields = configuration.Columns.Select(c => GenerateField(c, faker));
 
-        return new Record([.. fields]);
+        var dataRow = dataTable.NewRow();
+        dataRow.ItemArray = [.. fields];
+
+        return dataRow;
     }
 
-    private string GenerateField(Column column)
+    private static string GenerateField(Column column, Faker faker)
     {
         return column.Type switch
         {
