@@ -42,6 +42,7 @@
             numberOfRecordsSpinner.Name = "numberOfRecordsSpinner";
             numberOfRecordsSpinner.Size = new Size(104, 23);
             numberOfRecordsSpinner.TabIndex = 0;
+            numberOfRecordsSpinner.Value = new decimal(new int[] { 10, 0, 0, 0 });
             // 
             // numberOfRecordsLabel
             // 
