@@ -45,7 +45,7 @@ public partial class MainForm : Form
 
         if (exportFileDialog.ShowDialog() == DialogResult.OK)
         {
-            using var file = new FileStream(exportFileDialog.FileName, FileMode.OpenOrCreate);
+            using var file = new FileStream(exportFileDialog.FileName, FileMode.Create, FileAccess.Write);
 
             Exporter.Export(file, (DataTable)dataGridView.DataSource);
         }
