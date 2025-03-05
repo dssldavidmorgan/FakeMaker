@@ -19,7 +19,8 @@ public partial class MainForm : Form
 
     private void GenerateButton_Click(object sender, EventArgs e)
     {
-
+        using var generateDialog = new GenerateDialog();
+        generateDialog.ShowDialog();
     }
 
     private void ExportButton_Click(object sender, EventArgs e)
