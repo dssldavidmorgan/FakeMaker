@@ -16,9 +16,9 @@ public static class Exporter
         foreach (var dataRow in dataTable.Rows.Cast<DataRow>())
         {
             writer.WriteLine();
-
-            var row = string.Join(',', dataRow.ItemArray.Select(
-                i => i is null ? string.Empty : i.ToString()));
+            
+            var fields = dataRow.ItemArray.Select(i => i is null ? string.Empty : i.ToString());
+            var row = string.Join(',', fields);
 
             writer.Write(row);
         }
