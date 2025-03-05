@@ -151,6 +151,7 @@
             Controls.Add(columnsGroupBox);
             FormBorderStyle = FormBorderStyle.FixedDialog;
             Name = "ConfigureDialog";
+            StartPosition = FormStartPosition.CenterParent;
             Text = "Configure";
             Load += ConfigureDialog_Load;
             columnsGroupBox.ResumeLayout(false);
