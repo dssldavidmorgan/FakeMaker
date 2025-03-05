@@ -5,7 +5,25 @@ namespace FakeMaker.Core.Tests.Unit.ExporterTests;
 public class ExportTests
 {
     [Fact]
-    public void ConfigurationHasTwoColumns_ColumnNamesAreWrittenInHeader()
+    public void DataTableHasNoColumns_NothingIsWritten()
+    {
+        // Arrange
+        using var stream = new MemoryStream();
+        var dataTable = new DataTable();
+
+        // Act
+        Exporter.Export(stream, dataTable);
+
+        // Assert
+        stream.Seek(0, SeekOrigin.Begin);
+        using var reader = new StreamReader(stream);
+        var result = reader.ReadToEnd();
+
+        Assert.Empty(result);
+    }
+
+    [Fact]
+    public void DataTableHasTwoColumns_ColumnNamesAreWrittenInHeader()
     {
         // Arrange
         using var stream = new MemoryStream();
@@ -28,7 +46,7 @@ public class ExportTests
     }
 
     [Fact]
-    public void TwoRecordsAreExported_ResultantStringIsCorrect()
+    public void DataTableHasTwoRows_CorrectContentIsWritten()
     {
         // Arrange
         using var stream = new MemoryStream();

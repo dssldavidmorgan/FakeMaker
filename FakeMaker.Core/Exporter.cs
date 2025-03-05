@@ -6,6 +6,9 @@ public static class Exporter
 {
     public static void Export(Stream stream, DataTable dataTable)
     {
+        if (dataTable.Columns.Count == 0)
+            return;
+
         using var writer = new StreamWriter(stream, leaveOpen: true);
 
         var columnNames = dataTable.Columns.Cast<DataColumn>().Select(c => c.ColumnName);
