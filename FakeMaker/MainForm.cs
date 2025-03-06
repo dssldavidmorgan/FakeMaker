@@ -7,6 +7,8 @@ public partial class MainForm : Form
 {
     private Configuration configuration = new();
 
+    private readonly GenerateDialog generateDialog = new();
+
     public MainForm()
     {
         InitializeComponent();
@@ -21,9 +23,7 @@ public partial class MainForm : Form
 
     private void GenerateButton_Click(object sender, EventArgs e)
     {
-        using var generateDialog = new GenerateDialog();
-
-        if (generateDialog.ShowDialog() == DialogResult.OK)
+        if (generateDialog.ShowDialog(owner: this) == DialogResult.OK)
         {
             var dataTable = Generator.Generate(generateDialog.Count, configuration);
             dataGridView.DataSource = dataTable;
@@ -50,5 +50,10 @@ public partial class MainForm : Form
 
             Exporter.Export(file, (DataTable)dataGridView.DataSource);
         }
+    }
+
+    private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
+    {
+        generateDialog.Dispose();
     }
 }

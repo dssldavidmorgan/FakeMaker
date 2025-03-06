@@ -102,6 +102,7 @@
             Controls.Add(toolStrip);
             Name = "MainForm";
             Text = "FakeMaker";
+            FormClosed += MainForm_FormClosed;
             toolStrip.ResumeLayout(false);
             toolStrip.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView).EndInit();
