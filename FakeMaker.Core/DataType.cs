@@ -8,4 +8,5 @@ public enum DataType
     EnrolmentNumber,
     DateRecent,
     DateSoon,
+    DateOfBirth,
 }

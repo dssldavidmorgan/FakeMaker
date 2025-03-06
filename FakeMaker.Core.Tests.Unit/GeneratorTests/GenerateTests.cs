@@ -200,6 +200,32 @@ public class GenerateTests
         });
     }
 
+    [Fact]
+    public void ConfigurationHasDateOfBirthColumn_RecordsHaveDateOfBirthField()
+    {
+        // Arrange
+        var configuration = new Configuration()
+        {
+            Columns =
+            [
+                new Column() { Name = "date_of_birth", Type = DataType.DateOfBirth },
+            ],
+        };
+
+        // Act
+        var result = Generator.Generate(10, configuration);
+
+        // Assert
+        Assert.All(GetRows(result), x =>
+        {
+            var fields = GetFields(x);
+
+            Assert.True(DateOnly.TryParse(fields[0], out var dateOfBirth));
+            Assert.True(dateOfBirth <= DateOnly.FromDateTime(DateTime.Today.AddYears(-18)));
+            Assert.True(dateOfBirth >= DateOnly.FromDateTime(DateTime.Today.AddYears(-23)));
+        });
+    }
+
     private static DataRow[] GetRows(DataTable dataTable) => [.. dataTable.Rows.Cast<DataRow>()];
 
     private static string[] GetFields(DataRow dataRow) => [.. dataRow.ItemArray.Cast<string>()];

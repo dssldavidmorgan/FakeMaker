@@ -42,6 +42,7 @@ public static class Generator
             DataType.EmailAddress => faker.Internet.Email(),
             DataType.DateRecent => faker.Date.RecentDateOnly().ToString(),
             DataType.DateSoon => faker.Date.SoonDateOnly().ToString(),
+            DataType.DateOfBirth => faker.Date.PastDateOnly(5, DateOnly.FromDateTime(DateTime.Today.AddYears(-18))).ToString(),
             _ => throw new NotImplementedException(),
         };
     }
