@@ -43,6 +43,7 @@ public static class Generator
             DataType.DateRecent => faker.Date.RecentDateOnly().ToString(),
             DataType.DateSoon => faker.Date.SoonDateOnly().ToString(),
             DataType.DateOfBirth => faker.Date.PastDateOnly(5, DateOnly.FromDateTime(DateTime.Today.AddYears(-18))).ToString(),
+            DataType.Address => faker.Address.StreetAddress(),
             _ => throw new NotImplementedException(),
         };
     }

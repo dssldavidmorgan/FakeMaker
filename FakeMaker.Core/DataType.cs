@@ -9,4 +9,5 @@ public enum DataType
     DateRecent,
     DateSoon,
     DateOfBirth,
+    Address,
 }

@@ -226,6 +226,30 @@ public class GenerateTests
         });
     }
 
+    [Fact]
+    public void ConfigurationHasAddressColumn_RecordsHaveAddressField()
+    {
+        // Arrange
+        var configuration = new Configuration()
+        {
+            Columns =
+            [
+                new Column() { Name = "address", Type = DataType.Address },
+            ],
+        };
+
+        // Act
+        var result = Generator.Generate(10, configuration);
+
+        // Assert
+        Assert.All(GetRows(result), x =>
+        {
+            var fields = GetFields(x);
+
+            Assert.NotEmpty(fields);
+        });
+    }
+
     private static DataRow[] GetRows(DataTable dataTable) => [.. dataTable.Rows.Cast<DataRow>()];
 
     private static string[] GetFields(DataRow dataRow) => [.. dataRow.ItemArray.Cast<string>()];
