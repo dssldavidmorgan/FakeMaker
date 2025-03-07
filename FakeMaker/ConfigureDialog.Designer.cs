@@ -28,17 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            components = new System.ComponentModel.Container();
-            columnGroupBox = new GroupBox();
-            typeLabel = new Label();
-            typeComboBox = new ComboBox();
-            typeBindingSource = new BindingSource(components);
-            nameTextBox = new TextBox();
-            nameLabel = new Label();
-            addButton = new Button();
-            removeButton = new Button();
-            columnsListBox = new ListBox();
-            columnsBindingSource = new BindingSource(components);
             saveButton = new Button();
             loadButton = new Button();
             openFileDialog = new OpenFileDialog();
@@ -46,95 +35,10 @@
             tabControl = new TabControl();
             columnsTabPage = new TabPage();
             customDataTypesTabPage = new TabPage();
-            columnGroupBox.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)typeBindingSource).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)columnsBindingSource).BeginInit();
+            configureColumnsTabPage = new ConfigureColumnsTabPage();
             tabControl.SuspendLayout();
             columnsTabPage.SuspendLayout();
             SuspendLayout();
-            // 
-            // columnGroupBox
-            // 
-            columnGroupBox.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            columnGroupBox.Controls.Add(typeLabel);
-            columnGroupBox.Controls.Add(typeComboBox);
-            columnGroupBox.Controls.Add(nameTextBox);
-            columnGroupBox.Controls.Add(nameLabel);
-            columnGroupBox.Location = new Point(200, 6);
-            columnGroupBox.Name = "columnGroupBox";
-            columnGroupBox.Size = new Size(329, 94);
-            columnGroupBox.TabIndex = 3;
-            columnGroupBox.TabStop = false;
-            columnGroupBox.Text = "Column";
-            // 
-            // typeLabel
-            // 
-            typeLabel.AutoSize = true;
-            typeLabel.Location = new Point(32, 54);
-            typeLabel.Name = "typeLabel";
-            typeLabel.Size = new Size(32, 15);
-            typeLabel.TabIndex = 3;
-            typeLabel.Text = "Type";
-            // 
-            // typeComboBox
-            // 
-            typeComboBox.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            typeComboBox.DataSource = typeBindingSource;
-            typeComboBox.FormattingEnabled = true;
-            typeComboBox.Location = new Point(91, 51);
-            typeComboBox.Name = "typeComboBox";
-            typeComboBox.Size = new Size(221, 23);
-            typeComboBox.TabIndex = 2;
-            // 
-            // nameTextBox
-            // 
-            nameTextBox.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            nameTextBox.Location = new Point(91, 22);
-            nameTextBox.Name = "nameTextBox";
-            nameTextBox.Size = new Size(221, 23);
-            nameTextBox.TabIndex = 1;
-            // 
-            // nameLabel
-            // 
-            nameLabel.AutoSize = true;
-            nameLabel.Location = new Point(25, 25);
-            nameLabel.Name = "nameLabel";
-            nameLabel.Size = new Size(39, 15);
-            nameLabel.TabIndex = 0;
-            nameLabel.Text = "Name";
-            // 
-            // addButton
-            // 
-            addButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
-            addButton.Location = new Point(103, 328);
-            addButton.Name = "addButton";
-            addButton.Size = new Size(91, 23);
-            addButton.TabIndex = 2;
-            addButton.Text = "Add";
-            addButton.UseVisualStyleBackColor = true;
-            addButton.Click += AddButton_Click;
-            // 
-            // removeButton
-            // 
-            removeButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
-            removeButton.Location = new Point(6, 328);
-            removeButton.Name = "removeButton";
-            removeButton.Size = new Size(91, 23);
-            removeButton.TabIndex = 1;
-            removeButton.Text = "Remove";
-            removeButton.UseVisualStyleBackColor = true;
-            removeButton.Click += RemoveButton_Click;
-            // 
-            // columnsListBox
-            // 
-            columnsListBox.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
-            columnsListBox.DataSource = columnsBindingSource;
-            columnsListBox.FormattingEnabled = true;
-            columnsListBox.ItemHeight = 15;
-            columnsListBox.Location = new Point(6, 6);
-            columnsListBox.Name = "columnsListBox";
-            columnsListBox.Size = new Size(188, 319);
-            columnsListBox.TabIndex = 0;
             // 
             // saveButton
             // 
@@ -181,10 +85,7 @@
             // 
             // columnsTabPage
             // 
-            columnsTabPage.Controls.Add(columnGroupBox);
-            columnsTabPage.Controls.Add(columnsListBox);
-            columnsTabPage.Controls.Add(addButton);
-            columnsTabPage.Controls.Add(removeButton);
+            columnsTabPage.Controls.Add(configureColumnsTabPage);
             columnsTabPage.Location = new Point(4, 24);
             columnsTabPage.Name = "columnsTabPage";
             columnsTabPage.Padding = new Padding(3);
@@ -203,6 +104,14 @@
             customDataTypesTabPage.Text = "Custom Data Types";
             customDataTypesTabPage.UseVisualStyleBackColor = true;
             // 
+            // configureColumnsTabPage
+            // 
+            configureColumnsTabPage.Dock = DockStyle.Fill;
+            configureColumnsTabPage.Location = new Point(3, 3);
+            configureColumnsTabPage.Name = "configureColumnsTabPage";
+            configureColumnsTabPage.Size = new Size(529, 348);
+            configureColumnsTabPage.TabIndex = 0;
+            // 
             // ConfigureDialog
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -215,27 +124,12 @@
             Name = "ConfigureDialog";
             StartPosition = FormStartPosition.CenterParent;
             Text = "Configure";
-            Load += ConfigureDialog_Load;
-            columnGroupBox.ResumeLayout(false);
-            columnGroupBox.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)typeBindingSource).EndInit();
-            ((System.ComponentModel.ISupportInitialize)columnsBindingSource).EndInit();
             tabControl.ResumeLayout(false);
             columnsTabPage.ResumeLayout(false);
             ResumeLayout(false);
         }
 
         #endregion
-        private Button removeButton;
-        private ListBox columnsListBox;
-        private Button addButton;
-        private GroupBox columnGroupBox;
-        private Label typeLabel;
-        private ComboBox typeComboBox;
-        private TextBox nameTextBox;
-        private Label nameLabel;
-        private BindingSource typeBindingSource;
-        private BindingSource columnsBindingSource;
         private Button saveButton;
         private Button loadButton;
         private OpenFileDialog openFileDialog;
@@ -243,5 +137,6 @@
         private TabControl tabControl;
         private TabPage columnsTabPage;
         private TabPage customDataTypesTabPage;
+        private ConfigureColumnsTabPage configureColumnsTabPage;
     }
 }
