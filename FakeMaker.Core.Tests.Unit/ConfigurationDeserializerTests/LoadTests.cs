@@ -1,4 +1,4 @@
-﻿namespace FakeMaker.Core.Tests.Unit.ConfigurationSerializerTests;
+﻿namespace FakeMaker.Core.Tests.Unit.ConfigurationDeserializerTests;
 
 public class LoadTests
 {
@@ -9,7 +9,7 @@ public class LoadTests
         using var stream = new MemoryStream();
 
         // Act
-        var result = ConfigurationSerializer.Load(stream);
+        var result = ConfigurationDeserializer.Load(stream);
 
         // Assert
         Assert.Empty(result.Columns);
@@ -35,7 +35,7 @@ public class LoadTests
         stream.Seek(0, SeekOrigin.Begin);
 
         // Act
-        var result = ConfigurationSerializer.Load(stream);
+        var result = ConfigurationDeserializer.Load(stream);
 
         // Assert
         Assert.Collection(
@@ -84,7 +84,7 @@ public class LoadTests
         stream.Seek(0, SeekOrigin.Begin);
 
         // Act
-        var result = ConfigurationSerializer.Load(stream);
+        var result = ConfigurationDeserializer.Load(stream);
 
         // Assert
         Assert.Collection(

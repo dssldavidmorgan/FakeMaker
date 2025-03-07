@@ -19,7 +19,7 @@ public partial class ConfigureDialog : Form
         if (openFileDialog.ShowDialog() == DialogResult.OK)
         {
             using var fileStream = new FileStream(openFileDialog.FileName, FileMode.Open, FileAccess.Read);
-            Configuration = ConfigurationSerializer.Load(fileStream);
+            Configuration = Core.ConfigurationDeserializer.Load(fileStream);
             configureColumnsTabPage.InitializeDataBindings(Configuration);
         }
     }
