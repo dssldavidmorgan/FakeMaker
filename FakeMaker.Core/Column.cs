@@ -5,4 +5,6 @@ public class Column
     public required string Name { get; set; }
 
     public required DataType Type { get; set; }
+
+    public string? CustomDataTypeName { get; set; }
 }

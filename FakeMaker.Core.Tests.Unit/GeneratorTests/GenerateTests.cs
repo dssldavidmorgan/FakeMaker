@@ -274,6 +274,43 @@ public class GenerateTests
         });
     }
 
+    [Fact]
+    public void ConfigurationHasCustomDataTypeColumn_RecordsHaveCustomDataTypeField()
+    {
+        // Arrange
+        var configuration = new Configuration()
+        {
+            Columns =
+            [
+                new Column()
+                {
+                    Name = "custom",
+                    Type = DataType.Custom,
+                    CustomDataTypeName = "custom_data_type",
+                },
+            ],
+            CustomDataTypes =
+            [
+                new CustomDataType()
+                {
+                    Name = "custom_data_type",
+                    Values = ["1", "2", "3", "4"],
+                },
+            ],
+        };
+
+        // Act
+        var result = Generator.Generate(10, configuration);
+
+        // Assert
+        Assert.All(GetRows(result), x =>
+        {
+            var fields = GetFields(x);
+
+            Assert.NotEmpty(fields);
+        });
+    }
+
     private static DataRow[] GetRows(DataTable dataTable) => [.. dataTable.Rows.Cast<DataRow>()];
 
     private static string[] GetFields(DataRow dataRow) => [.. dataRow.ItemArray.Cast<string>()];

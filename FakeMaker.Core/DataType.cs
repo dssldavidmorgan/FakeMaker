@@ -11,4 +11,5 @@ public enum DataType
     DateOfBirth,
     Address,
     StreetName,
+    Custom,
 }

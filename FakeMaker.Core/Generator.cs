@@ -24,7 +24,7 @@ public static class Generator
 
     private static DataRow GenerateRecord(Configuration configuration, DataTable dataTable, Faker faker)
     {
-        var fields = configuration.Columns.Select(c => GenerateField(c, faker));
+        var fields = configuration.Columns.Select(c => GenerateField(configuration, c, faker));
 
         var dataRow = dataTable.NewRow();
         dataRow.ItemArray = [.. fields];
@@ -32,7 +32,7 @@ public static class Generator
         return dataRow;
     }
 
-    private static string GenerateField(Column column, Faker faker)
+    private static string GenerateField(Configuration configuration, Column column, Faker faker)
     {
         return column.Type switch
         {
@@ -45,7 +45,19 @@ public static class Generator
             DataType.DateOfBirth => faker.Date.PastDateOnly(5, DateOnly.FromDateTime(DateTime.Today.AddYears(-18))).ToString(),
             DataType.Address => faker.Address.StreetAddress(),
             DataType.StreetName => faker.Address.StreetName(),
+            DataType.Custom => GenerateCustomData(configuration, column),
             _ => throw new NotImplementedException(),
         };
+    }
+
+    private static string GenerateCustomData(Configuration configuration, Column column)
+    {
+        var customDataType = configuration.CustomDataTypes.FirstOrDefault(x => x.Name == column.CustomDataTypeName)
+            ?? throw new InvalidCustomDataTypeNameException(column.CustomDataTypeName ?? string.Empty);
+
+        var randomIndex = Random.Shared.Next(customDataType.Values.Count);
+        var value = customDataType.Values.ElementAt(randomIndex);
+
+        return value;
     }
 }
